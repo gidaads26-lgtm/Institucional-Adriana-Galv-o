@@ -120,14 +120,12 @@ h2{font-size:clamp(2.25rem,1.5rem + 2.6vw,3.6rem)}
   min-height:3.5rem;padding:.9rem 2rem;border-radius:999px;border:0;
   background:var(--bg);color:var(--fg);
   font:500 .8rem/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;cursor:pointer;
-  transition:transform .18s var(--ease);-webkit-tap-highlight-color:transparent;
+  transition:transform .18s var(--ease),color .3s var(--ease);-webkit-tap-highlight-color:transparent;
 }
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:scale(.97)}
 .btn svg{width:1.15rem;height:1.15rem;flex:none;transition:transform .35s var(--ease)}
 .btn:hover svg{transform:rotate(-12deg)}
-.btn::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%)}
-.btn:hover::before{transition:transform .9s var(--ease);transform:translateX(120%)}
 .btn-ouro{--bg:var(--ouro);--fg:#1A1712}
 .btn-linho{--bg:var(--linho);--fg:var(--tinta)}
 .btn-contorno{--bg:transparent;--fg:var(--mar);box-shadow:inset 0 0 0 1px var(--mar)}
@@ -383,16 +381,10 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 
 /* Instagram: circulo enche de ouro */
 .circulo-ic{position:relative;overflow:hidden;isolation:isolate}
-.circulo-ic::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ouro);transform:scale(0);z-index:-1;transition:transform .35s var(--ease)}
-.circulo-ic:hover::before,.circulo-ic:active::before,.circulo-ic.tocado::before{transform:scale(1)}
-.circulo-ic:hover,.circulo-ic.tocado{color:#1A1712}
+.circulo-ic{transition:transform .25s var(--ease),color .3s var(--ease)}
 .circulo-ic:active{transform:scale(.92)}
 .circulo-ic svg{transition:transform .35s var(--ease)}
 .circulo-ic.tocado svg{animation:pulo .5s var(--ease)}
-.btn-contorno::after{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;background:var(--mar);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
-.btn-contorno{transition:transform .18s var(--ease),color .3s var(--ease)}
-.btn-contorno:hover,.btn-contorno.tocado{color:#fff}
-.btn-contorno:hover::after,.btn-contorno.tocado::after{transform:scaleX(1)}
 
 /* FAQ abre com altura suave onde o navegador permite */
 @supports (interpolate-size: allow-keywords){
@@ -400,6 +392,16 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
   .js-anim .faq details::details-content{block-size:0;overflow:hidden;transition:block-size .4s var(--ease),content-visibility .4s allow-discrete}
   .js-anim .faq details[open]::details-content{block-size:auto}
 }
+
+/* Cupula de cor: sobe por baixo ao passar o mouse ou tocar e sai pelo topo ao soltar */
+.btn::before,.barra-cta::before{content:"";position:absolute;left:-25%;top:100%;width:150%;height:300%;border-radius:50%;background:var(--fx,var(--tinta));z-index:-1;pointer-events:none}
+.btn-contorno{--fx:var(--mar)}
+.btn.cheio,.barra-cta.cheio{color:#fff}
+.circulo-ic::before,.wa-flutuante::after{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;pointer-events:none;transform:scale(0)}
+.circulo-ic::before{background:var(--ouro)}
+.circulo-ic.cheio{color:#1A1712;border-color:var(--ouro)}
+.wa-flutuante{isolation:isolate;overflow:visible}
+.wa-flutuante::after{background:var(--tinta)}
 
 /* barra de agendamento fixa no celular */
 .barra-cta{display:none}
@@ -950,6 +952,40 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
   document.querySelectorAll(".painel a").forEach(function(a){ a.addEventListener("click", fechaMenu); });
   document.querySelector(".veu").addEventListener("click", fechaMenu);
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") fechaMenu(); });
+
+  /* Cupula de cor nos botoes de WhatsApp e Instagram */
+  var EASE = "cubic-bezier(.22,1,.36,1)", DUR = reduz ? 0 : 560;
+  function cupula(el){
+    var circulo = el.matches(".circulo-ic, .wa-flutuante");
+    var pseudo = el.matches(".wa-flutuante") ? "::after" : "::before";
+    var anim = null, cheio = false, toqueT;
+    function roda(quadros, fica){
+      if (anim) anim.cancel();
+      if (!el.animate) return;
+      anim = el.animate(quadros, {duration: DUR, easing: EASE, fill: fica ? "forwards" : "none", pseudoElement: pseudo});
+    }
+    function entra(){
+      if (cheio) return; cheio = true; el.classList.add("cheio");
+      roda(circulo
+        ? [{transform:"scale(0)", transformOrigin:"50% 100%"}, {transform:"scale(1)", transformOrigin:"50% 100%"}]
+        : [{transform:"translateY(0)"}, {transform:"translateY(-50%)"}], true);
+    }
+    function sai(){
+      if (!cheio) return; cheio = false; el.classList.remove("cheio");
+      roda(circulo
+        ? [{transform:"scale(1)", transformOrigin:"50% 0%"}, {transform:"scale(0)", transformOrigin:"50% 0%"}]
+        : [{transform:"translateY(-50%)"}, {transform:"translateY(-140%)"}], false);
+    }
+    el.addEventListener("pointerenter", function(e){ if (e.pointerType === "mouse") entra(); });
+    el.addEventListener("pointerleave", function(e){ if (e.pointerType === "mouse") sai(); });
+    el.addEventListener("pointerdown", function(e){ if (e.pointerType !== "mouse"){ clearTimeout(toqueT); entra(); } });
+    ["pointerup", "pointercancel"].forEach(function(t){
+      el.addEventListener(t, function(e){ if (e.pointerType !== "mouse"){ clearTimeout(toqueT); toqueT = setTimeout(sai, 380); } });
+    });
+    el.addEventListener("focus", function(){ if (el.matches(":focus-visible")) entra(); });
+    el.addEventListener("blur", sai);
+  }
+  document.querySelectorAll(".btn, .barra-cta, .circulo-ic, .wa-flutuante").forEach(cupula);
 
   /* Resposta ao toque nos botoes de agendar e no Instagram */
   var aviso = document.querySelector(".aviso"), avisoT;
