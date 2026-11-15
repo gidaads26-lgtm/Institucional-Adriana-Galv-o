@@ -9,7 +9,7 @@ SAIDA = os.path.join(AQUI, "..", "index.html")
 FOTOS = os.path.join(AQUI, "fotos")
 
 # ===== Dados (troque aqui) =====
-DOMINIO = "https://www.seudominio.com.br"   # a definir
+DOMINIO = "https://institucionaladrianagalvao.vercel.app"
 CIDADE = "Guarulhos"
 UF = "SP"
 ENDERECO = []        # 3 linhas, ex.: ["Rua X, 123, sala 4", "Bairro, São Paulo, SP", "CEP 00000-000"]
@@ -100,9 +100,9 @@ RAMINHO = ('<path d="M32 54 C31 42 33 30 31 18 C30 12 32 8 35 5" fill="none" str
            '<path d="M31.5 44 C25 42 20 37 18 30 C25 31 30 36 31.5 42Z M32 34 C38 31 43 26 45 19 C38 21 33 27 32 32Z M31 24 C26 22 23 17 22 12 C27 13 30 17 31 22Z" fill="#FFD5CA"/>')
 FAV_SVG = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#4A7A8C"/>{RAMINHO}</svg>'
 
-def apple_icon():
+def apple_icon(tam=180, arquivo=None):
     from PIL import ImageDraw
-    s = 180
+    s = tam
     im = Image.new("RGB", (s, s), "#4A7A8C"); d = ImageDraw.Draw(im)
     k = s / 64
     # caule
@@ -112,6 +112,9 @@ def apple_icon():
                  [(32,34),(38,31),(43,26),(45,19),(38,21),(33,27)],
                  [(31,24),(26,22),(23,17),(22,12),(27,13),(30,17)]):
         d.polygon([(x*k, y*k) for x, y in poly], fill="#FFD5CA")
+    if arquivo:
+        im.save(arquivo, "PNG", optimize=True)
+        return arquivo
     b = io.BytesIO(); im.save(b, "PNG", optimize=True)
     return "data:image/png;base64," + base64.b64encode(b.getvalue()).decode()
 
@@ -171,6 +174,9 @@ def main():
         return subs[k]
     out = re.sub(r"%%([A-Z0-9_]+)%%", rep, t)
     open(SAIDA, "w", encoding="utf-8").write(out)
+    raiz = os.path.dirname(os.path.abspath(SAIDA))
+    apple_icon(180, os.path.join(raiz, "apple-touch-icon.png"))
+    apple_icon(32, os.path.join(raiz, "favicon-32.png"))
     print("ok", len(out)//1024, "KB | fotos:", dict(hero=ok_h, sobre=ok_s, consultorio=ok_l))
 
 if __name__ == "__main__":
