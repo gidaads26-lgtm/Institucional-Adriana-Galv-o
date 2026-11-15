@@ -329,6 +329,22 @@ h2{font-size:clamp(2.25rem,1.5rem + 2.6vw,3.6rem)}
 .js-anim .wa-flutuante.visivel::before{animation:anel 2.8s var(--ease) infinite}
 @keyframes anel{0%{transform:scale(1);opacity:.8}80%,100%{transform:scale(1.55);opacity:0}}
 
+/* ===== Toque no celular: sem a tarja azul padrao, com resposta propria ===== */
+html{-webkit-tap-highlight-color:transparent}
+a,button,summary,label{-webkit-tap-highlight-color:transparent}
+.marca,.hamburguer,.btn,.barra-cta,.wa-flutuante,.circulo-ic,.faq summary,.menu ul a,.painel li a,.link-texto{-webkit-user-select:none;user-select:none}
+:focus:not(:focus-visible){outline:none}
+.marca{transition:opacity .2s var(--ease)}
+.marca:active{opacity:.55}
+.menu ul a:active,.painel li a:active{color:var(--mar)}
+.link-texto{transition:opacity .2s var(--ease)}
+.link-texto:active{opacity:.55}
+.faq summary{transition:color .2s var(--ease)}
+.faq summary:active{color:var(--mar)}
+.rodape a{transition:opacity .2s var(--ease)}
+.rodape a:active{opacity:.6}
+.wa-flutuante.visivel:active{transform:scale(.92)}
+
 /* ===== Correcoes da revisao ===== */
 .menu ul a{padding:.85rem 0}
 .rodape .copy a{display:inline-block;padding:.75rem .25rem}
