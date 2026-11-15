@@ -20,6 +20,9 @@ DEPOIMENTOS = [      # [{"nome":..., "tema":..., "texto":..., "foto":"depo1.jpg"
     {"nome": "Vanuzia Luiz", "tema": "Ansiedade e Insônia",
      "texto": "Eu vivia com a cabeça a mil e mal conseguia dormir. Desde as primeiras sessões com a Adriana, senti um alívio que não encontrava há anos. Hoje consigo desacelerar, ter noites tranquilas e lidar com o meu dia a dia com muito mais leveza.",
      "foto": None},
+    {"nome": "Rafael Marques", "tema": "Ansiedade",
+     "texto": "Achava que viver ansioso fazia parte de quem eu era. O acompanhamento com a Adriana transformou a minha rotina: o barulho mental diminuiu e hoje vivo com uma calma que eu nem lembrava como era.",
+     "foto": None},
 ]
 
 def pend(txt):
