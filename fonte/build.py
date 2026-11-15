@@ -16,7 +16,11 @@ ENDERECO = []        # 3 linhas, ex.: ["Rua X, 123, sala 4", "Bairro, São Paulo
 FORMACAO = ""        # ex.: "Formada em Hipnoterapia Clínica pelo INSTITUTO e em Neuropsicopedagogia pela INSTITUICAO."
 HERO_TITULO = 'Se a ansiedade tem tirado a sua paz, <span class="acento">você não precisa enfrentar isso sem apoio</span>'
 HERO_SUB = "Vou com você até a raiz do que dói e te ajudo a levar a mudança para a sua rotina."
-DEPOIMENTOS = []     # [{"nome":..., "tema":..., "texto":..., "foto":"depo1.jpg" ou None}]
+DEPOIMENTOS = [      # [{"nome":..., "tema":..., "texto":..., "foto":"depo1.jpg" ou None}]
+    {"nome": "Vanuzia Luiz", "tema": "Ansiedade e Insônia",
+     "texto": "Eu vivia com a cabeça a mil e mal conseguia dormir. Desde as primeiras sessões com a Adriana, senti um alívio que não encontrava há anos. Hoje consigo desacelerar, ter noites tranquilas e lidar com o meu dia a dia com muito mais leveza.",
+     "foto": None},
+]
 
 def pend(txt):
     return f'<span class="pendente">{txt}</span>'
