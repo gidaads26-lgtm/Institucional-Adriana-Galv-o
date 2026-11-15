@@ -156,7 +156,7 @@ def main():
         "EM_CIDADE": f" em {CIDADE}/{UF}" if CIDADE else "",
         "CIDADE": CIDADE, "UF": UF,
         "CIDADE_UF_HTML": cidade_uf if CIDADE else pend(cidade_uf),
-        "CIDADE_HTML": CIDADE if CIDADE else pend("[Cidade]"),
+        "CIDADE_HTML": f"{CIDADE}/{UF}" if CIDADE else pend("[Cidade]"),
         "ENDERECO_3L": "<br>".join(ENDERECO) if ENDERECO else pend("Rua e número a definir") + "<br>" + pend("Bairro") + f", {CIDADE}/{UF}<br>" + pend("CEP"),
         "ENDERECO_1L": ", ".join(ENDERECO) if ENDERECO else f"Consultório em {CIDADE}/{UF}",
         "FORMACAO": FORMACAO if FORMACAO else pend("[Formação: onde se formou em Hipnoterapia Clínica e em Neuropsicopedagogia]"),
