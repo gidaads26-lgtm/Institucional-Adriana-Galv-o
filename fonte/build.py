@@ -128,7 +128,7 @@ def apple_icon(tam=180, arquivo=None):
 # ===== Depoimentos =====
 def depos_html():
     cards = []
-    for i in range(3):
+    for i in range(max(1, min(3, len(DEPOIMENTOS)))):
         d = DEPOIMENTOS[i] if i < len(DEPOIMENTOS) else None
         if d:
             if d.get("foto"):
@@ -172,6 +172,7 @@ def main():
         "ENDERECO_JSON": endereco_json(),
         "TINTA": foto("tinta", "", 1600, 1000, larg_max=1600, qual=78)[0],
         "FAQ": faq_html(), "DEPOIMENTOS": depos_html(),
+        "DEPO_CLASSE": {1: " depos-1", 2: " depos-2"}.get(len(DEPOIMENTOS), ""),
         "FAVICON_SVG": "data:image/svg+xml," + quote(FAV_SVG), "APPLE_ICON": apple_icon(),
     }
     subs.update(ICONES)

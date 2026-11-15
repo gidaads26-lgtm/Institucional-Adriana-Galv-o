@@ -266,6 +266,9 @@ h2{font-size:clamp(2.25rem,1.5rem + 2.6vw,3.6rem)}
 .depo-card small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--texto2);margin-top:.15rem}
 .depo-card.a-inserir{outline:1px dashed var(--ouro);outline-offset:-12px}
 
+.depos-2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:56rem;margin-inline:auto}
+.depos-1{grid-template-columns:minmax(0,1fr);max-width:32rem;margin-inline:auto}
+
 /* 8. Quem sou eu */
 .sobre-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(2.5rem,7vw,7rem);align-items:start}
 .sobre .sec-head{text-align:left;margin:0 0 2.2rem;max-width:none}
@@ -736,10 +739,9 @@ h2{font-size:clamp(2.25rem,1.5rem + 2.6vw,3.6rem)}
       <span class="sobrelinha">Depoimentos</span>
       <h2 id="depo-titulo">O que meus pacientes <span class="acento">dizem</span></h2>
     </div>
-    <div class="cards-3" data-grupo>
+    <div class="cards-3 depos-2" data-grupo>
       <figure class="depo-card" style="--i:0"><span class="aspas" aria-hidden="true">“</span><blockquote>Eu vivia com a cabeça a mil e mal conseguia dormir. Desde as primeiras sessões com a Adriana, senti um alívio que não encontrava há anos. Hoje consigo desacelerar, ter noites tranquilas e lidar com o meu dia a dia com muito mais leveza.</blockquote><footer><span class="avatar" aria-hidden="true">V</span><figcaption><strong>Vanuzia Luiz</strong><small>Ansiedade e Insônia</small></figcaption></footer></figure>
       <figure class="depo-card" style="--i:1"><span class="aspas" aria-hidden="true">“</span><blockquote>Achava que viver ansioso fazia parte de quem eu era. O acompanhamento com a Adriana transformou a minha rotina: o barulho mental diminuiu e hoje vivo com uma calma que eu nem lembrava como era.</blockquote><footer><span class="avatar" aria-hidden="true">R</span><figcaption><strong>Rafael Marques</strong><small>Ansiedade</small></figcaption></footer></figure>
-      <figure class="depo-card a-inserir" style="--i:2"><span class="aspas" aria-hidden="true">“</span><blockquote>A inserir: depoimento real, autorizado pela pessoa.</blockquote><footer><span class="avatar" aria-hidden="true">?</span><figcaption><strong>A inserir</strong><small>Tema do atendimento</small></figcaption></footer></figure>
     </div>
   </div>
 </section>
